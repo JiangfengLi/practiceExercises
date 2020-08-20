@@ -2,6 +2,7 @@ package practiceOOP;
 
 import java.io.*;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.nio.file.*;
 import java.util.*;
 
@@ -20,9 +21,9 @@ public class University {
      */
     public University(String name) {
         // TODO: initialize instance variable name
-
+        this.name = name;
         // TODO: Create an ArrayList and assign a reference to it to instance variable students
-
+        students = new ArrayList<>();
 
     }
 
@@ -34,7 +35,7 @@ public class University {
      */
     public void addStudent(String studentName, int studentId) {
         // TODO: create a student with this name and id
-
+        students.add(new Student(studentName, studentId));
     }
 
     /** Return true if a person with the given name is a student at this university,
@@ -45,7 +46,9 @@ public class University {
      */
     public boolean findStudent(String name) {
         // TODO: check if the student with this name is in the ArrayList
-
+        for(Student student: students){
+            if(student.getName().equals(name)) return true;
+        }
         return false;
     }
 
@@ -56,8 +59,11 @@ public class University {
      */
     public String toString() {
         // TODO: return a string representation of the university - see description above
-
-        return null; // remember to change this
+        StringBuilder details = new StringBuilder(this.name);
+        for(Student student: students){
+            details.append("\n" + student.toString());
+        }
+        return details.toString(); // remember to change this
     }
 
     /**
@@ -66,7 +72,7 @@ public class University {
     public void sort() {
         // TODO: sort students.
         // Note: implement compareTo method in class Student first
-
+        students.sort(Student::compareTo);
 
     }
 
@@ -79,6 +85,18 @@ public class University {
         // TODO: read from the file, create student objects and add them to the list of students
         // HINT: Consider using function split from class String
         // Integer.parseInt method takes a String representation of an integer like "123" and returns an integer
+        try {
+            File studentFile = filePath.toFile();
+            Scanner bufferReader = new Scanner(studentFile);
+            while (bufferReader.hasNextLine()) {
+                String[] data = bufferReader.nextLine().split(",");
+                addStudent(data[0], Integer.valueOf(data[1]));
+            }
+            bufferReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Failed to read student data!!!");
+            e.printStackTrace();
+        }
 
     }
 }

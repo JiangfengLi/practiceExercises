@@ -11,8 +11,14 @@ public class StringHelper {
      */
     public static int countVowels(String message) {
         //TODO: Replace with your code.
-
-        return -1; // remember to change
+        int count = 0;
+        String buff = message.toLowerCase();
+        for(int i = 0; i < buff.length(); i++){
+            char ch = buff.charAt(i);
+            if(ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u')
+                count++;
+        }
+        return count; // remember to change
     }
 
     /**
@@ -32,8 +38,16 @@ public class StringHelper {
      */
     public static String encrypt(String message, int shift) {
         //TODO: Replace with your code.
-
-        return ""; // remember to change
+        if(shift > 26) return null;
+        StringBuilder res = new StringBuilder();
+        String lowerCase = "abcdefghijklmnopqrstuvwxyz";
+        for (int i = 0; i < message.length(); i++) {
+            char ch = message.charAt(i);
+            if(ch - 'a' >= 26 || ch - 'a' < 0) return null;
+            int interp = (ch - 'a' + shift) % 26;
+            res.append(lowerCase.charAt(interp));
+        }
+        return res.toString(); // remember to change
     }
 
     /** Main method: runs methods of class StringHelper

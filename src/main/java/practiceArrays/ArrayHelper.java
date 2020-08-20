@@ -1,5 +1,10 @@
 package practiceArrays;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 /** ArrayHelper class contains several static methods for manipulating an array of
  * integers.
  */
@@ -11,7 +16,11 @@ public class ArrayHelper {
      */
     public static void print(int[] arr) {
         //TODO: Replace with your code.
+        if(arr == null || arr.length == 0) return;
 
+        System.out.print(arr[0]);
+        for (int i = 1; i < arr.length; i++)
+            System.out.print(", " + arr[i]);
     }
 
 
@@ -23,7 +32,8 @@ public class ArrayHelper {
     public static int sum(int[] arr) {
         int s = 0;
         //TODO: Replace with your code.
-
+        for (int i = 0; i < arr.length; i++)
+            s += arr[i];
         return s;
     }
 
@@ -37,7 +47,9 @@ public class ArrayHelper {
      */
     public static boolean threshold(int[] arr, int thres) {
         //TODO: Replace with your code.
-
+        for (int i = 0; i < arr.length; i++){
+            if(arr[i] >= thres) return false;
+        }
         return true;
     }
 
@@ -51,8 +63,9 @@ public class ArrayHelper {
      */
     public static boolean find(int[] arr, int elem) {
         //TODO: Replace with your code.
-
-
+        for (int i = 0; i < arr.length; i++){
+            if(arr[i] == elem) return true;
+        }
         return false;
     }
 
@@ -64,8 +77,12 @@ public class ArrayHelper {
      */
     public static int countOccurrences(int[] arr, int elem) {
         //TODO: Replace with your code.
-
-        return -1; // remember to change
+        Map<Integer, Integer> occurrences = new HashMap<Integer, Integer>();
+        for (int i = 0; i < arr.length; i++)
+            occurrences.put(arr[i], occurrences.containsKey(arr[i]) ?
+                    occurrences.get(arr[i]) + 1 : 1 );
+        if(!occurrences.containsKey(elem)) return 0;
+        return occurrences.get(elem); // remember to change
     }
 
     /** Returns true if array of integers has duplicate elements,
@@ -79,6 +96,12 @@ public class ArrayHelper {
      */
     public static boolean hasDuplicates(int[] arr) {
         //TODO: Replace with your code.
+        Set<Integer> occurrences = new HashSet<Integer>();
+        for (int i = 0; i < arr.length; i++){
+            if(occurrences.contains(arr[i]))
+                return true;
+            occurrences.add(arr[i]);
+        }
 
         return false;
     }
